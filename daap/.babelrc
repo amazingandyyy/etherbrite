@@ -1,0 +1,17 @@
+{
+    "presets": [
+        "es2017",
+        "react",
+        [
+            "env",
+            {
+                "targets": {
+                    "uglify": true
+                }
+            }
+        ]
+    ],
+    "plugins": [
+        "transform-object-rest-spread"
+    ]
+}
