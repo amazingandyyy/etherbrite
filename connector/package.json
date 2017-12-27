@@ -8,6 +8,7 @@
     "build": "babel src --out-dir lib --watch",
     "release": "npm version patch && babel src --out-dir lib && npm publish"
   },
+  "repository": "https://github.com/amazingandyyy/etherbrite/tree/master/connector",
   "author": "Amazingandyyy <amazingandyyy@gmail.com> (Andy Chen)",
   "license": "MIT",
   "devDependencies": {

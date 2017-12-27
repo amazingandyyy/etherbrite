@@ -7,7 +7,7 @@
     "test": "eslint --fix src/",
     "start": "npm run prod && serve ./dist",
     "dev": "webpack-dev-server --open --config webpack.dev.js",
-    "prod": "rm -rf dist && webpack --progress -p --config webpack.prod.js",
+    "prod": "rm -rf ../docs && webpack --progress -p --config webpack.prod.js",
     "precommit": "npm test",
     "prepush": "npm test"
   },

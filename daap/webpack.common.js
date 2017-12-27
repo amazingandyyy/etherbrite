@@ -9,7 +9,7 @@ module.exports = {
         vender: ['react', 'react-dom', 'redux', 'react-redux', 'react-router']
     },
     output: {
-        path: path.resolve(__dirname, 'dist/'),
+        path: path.resolve(__dirname, '../docs/'),
         filename: "js/[name].[chunkhash].js"
     },
     module: {
