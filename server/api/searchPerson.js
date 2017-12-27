@@ -2,8 +2,8 @@ import Web3 from 'web3';
 import TruffleContract from 'truffle-contract';
 import config from '../config';
 
-const web3Provider = new Web3.providers.HttpProvider('http://localhost:8545')
-const web3 = new Web3(web3Provider);
+const provider = new Web3.providers.HttpProvider('http://localhost:8545')
+const web3 = new Web3(provider);
 const coinbase = web3.eth.coinbase;
 
 function searchPerson(req, res, next) {
@@ -18,7 +18,7 @@ function search(addr) {
   const DEFAULT_GAS = 4000000;
   const EventContractABI = require(`${config.contractPath}/Event.json`);
   let EventContract = TruffleContract(EventContractABI);
-  EventContract.setProvider(web3Provider);
+  EventContract.setProvider(provider);
   return EventContract.search(
     addr,
     {

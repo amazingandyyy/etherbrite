@@ -7,6 +7,10 @@ contract Event {
   string  public date;
   uint    public ticketNum = 0;
   uint    public ticketPrice;
+
+  event EventContractCreated(uint timestamp, string name, string location, string date, uint ticketNum, uint ticketPrice);
+  event NewRegistration(uint timestamp, string first, string last, string email, bool checkedin);
+  event CheckedIn(uint timestamp, address buyer, bool checkedin);
   
   struct Attendee {
     string    first;
@@ -15,7 +19,7 @@ contract Event {
     bool      checkedin;
   }
 
-  mapping(address => Attendee) public Attendees;
+  mapping(address => Attendee) private Attendees;
 
   modifier isHolder() {
     require(msg.sender == holder);
@@ -28,7 +32,7 @@ contract Event {
     require(bytes(_location).length != 0);
     require(bytes(_date).length != 0);
     require(_ticketNum != 0);
-    require(_ticketPrice != 0);
+    require(_ticketPrice >= 0);
     
     holder = msg.sender;
     name = _name;
@@ -36,6 +40,9 @@ contract Event {
     date = _date;
     ticketNum = _ticketNum;
     ticketPrice = _ticketPrice;
+
+    EventContractCreated(now, name, location, date, ticketNum, ticketPrice);
+
   }
 
   function register(string _first, string _last, string _email) public payable {
@@ -54,6 +61,8 @@ contract Event {
     
     ticketNum = ticketNum - 1;
     Attendees[msg.sender] = currentAttendee;
+
+    NewRegistration(now, Attendees[msg.sender].first, Attendees[msg.sender].last, Attendees[msg.sender].email, Attendees[msg.sender].checkedin);
   }
 
   // search with address
@@ -71,10 +80,12 @@ contract Event {
     return ("Private", "Private", "Private", Attendees[_buyer].checkedin);
   }
 
-  function checkin(address _buyer) isHolder() public returns (string, string, string, bool) {
+  function checkin(address _buyer) isHolder public returns (string, string, string, bool) {
     require(bytes(Attendees[_buyer].email).length > 0);
     Attendees[_buyer].checkedin = true;
     return (Attendees[_buyer].first, Attendees[_buyer].last, Attendees[_buyer].email, Attendees[_buyer].checkedin);
+
+    CheckedIn(now, _buyer, Attendees[_buyer].checkedin);
   }
   
 }

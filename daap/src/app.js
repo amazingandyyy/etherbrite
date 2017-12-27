@@ -10,6 +10,9 @@ import App from './components/app'
 import Crowdsale from './components/crowdsale'
 import Welcome from './components/welcome'
 import Layout from './components/layout'
+import Create from './components/create'
+// import Rigester from './components/rigester'
+// import Checkin from './components/checkin'
 import reducers from './reducers'
 
 // import actions that will be used in this file, after building store
@@ -33,6 +36,9 @@ const Root = () => (
           <Route exact path="/" component={App} />
           <Route path="/welcome" component={Welcome} />
           <Route path="/crowdsale" component={Crowdsale} />
+          <Route path="/create" component={Create} />
+          {/* <Route path="/rigester" component={Rigester} />
+          <Route path="/checkin" component={Checkin} /> */}
         </Switch>
       </Layout>
     </HashRouter>

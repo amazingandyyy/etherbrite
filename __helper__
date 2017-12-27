@@ -1,0 +1,3 @@
+geth --cache 4096 --rinkeby --rpc --unlock 0 console
+
+"nameeeee", "locationnnn", "dateeee", 10, 100000000
