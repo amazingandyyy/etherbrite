@@ -78,7 +78,6 @@ contract('Event contract', function(accounts) {
       });
     }catch(e){
       assert.isTrue(!e == false);
-
       let holder_find_result = await eventInstance.search.call(buyer);
       assert.isTrue(holder_find_result[3] == false);
     }
