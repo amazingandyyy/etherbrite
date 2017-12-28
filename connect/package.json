@@ -1,6 +1,6 @@
 {
-  "name": "etherbrite-connector",
-  "version": "0.0.12",
+  "name": "etherbrite-connect",
+  "version": "0.0.2",
   "description": "Connect ethereum network.",
   "main": "lib/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "build": "babel src --out-dir lib --watch",
     "release": "npm version patch && babel src --out-dir lib && npm publish"
   },
-  "repository": "https://github.com/amazingandyyy/etherbrite/tree/master/connector",
+  "repository": "https://github.com/amazingandyyy/etherbrite/tree/master/connect",
   "author": "Amazingandyyy <amazingandyyy@gmail.com> (Andy Chen)",
   "license": "MIT",
   "devDependencies": {

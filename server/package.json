@@ -6,14 +6,14 @@
   "scripts": {
     "start": "nodemon server.js",
     "dev": "babel-watch server.js",
-    "re": "npm i --save etherbrite-connector@latest"
+    "re": "npm i --save etherbrite-connect@latest"
   },
   "author": "Amazingandyyy <amazingandyyy@gmail.com> (Andy Chen)",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.2",
     "dotenv": "^4.0.0",
-    "etherbrite-connector": "0.0.12",
+    "etherbrite-connect": "0.0.2",
     "express": "^4.16.2",
     "nodemon": "^1.14.3",
     "truffle-contract": "^3.0.1",

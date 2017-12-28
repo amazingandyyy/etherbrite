@@ -1,4 +1,4 @@
-import { createEvent } from 'etherbrite-connector';
+import { createEvent } from 'etherbrite-connect';
 
 export default (req, res, next) => {
   let { name, location, date, ticketNum, ticketPrice } = req.body;
