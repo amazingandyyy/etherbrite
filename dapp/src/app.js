@@ -25,7 +25,7 @@ import './styles/index.scss'
 const store = applyMiddleware(reduxThunk)(createStore)(reducers)
 
 // initialize the connection with ethereum blockchain
-connectEth()(store.dispatch)
+connectEth()(store.dispatch);
 
 // build the Root Component and declare Routes
 const Root = () => (

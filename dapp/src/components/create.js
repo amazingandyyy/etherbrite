@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Eth from 'ethjs';
+import { createEvent } from '../../../connect/src/index';
+// import 'react-notifications/lib/notifications.css';
+// import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 let initialState = {
   event: {
@@ -19,31 +22,19 @@ class Create extends React.Component {
     this.state = initialState;
   }
   componentDidMount(){
-
+    // NotificationManager.info('Info message');
   }
   createEvent(e) {
     e.preventDefault();
     const { eth } = this.props;
-    console.log(this.state);
-    // const VCNCrowdSaleAddr = this.state.address; // <- need to be change
-    // if (VCNCrowdSaleAddr) {
-    //   eth.coinbase().then((coinbase) => {
-    //     this.setState({
-    //       coinbase
-    //     })
-    //     let num = this.state.etherAmount;
-    //     if (num > 0){
-    //       eth.sendTransaction({
-    //         from: coinbase,
-    //         to: VCNCrowdSaleAddr,
-    //         value: Eth.toWei(num, "ether"),
-    //         data: '0x'
-    //       }).then(tx=>{
-    //         this.setState({ tx })
-    //       }).catch(console.error);
-    //     }
-    //   }).catch(console.error);
-    // }
+    const createEventFnc = createEvent(this.props.eth.currentProvider);
+    let { name, location, date, ticketNum, ticketPrice } = this.state;
+
+    createEventFnc(name, location, date, ticketNum, ticketPrice)
+      .then(contract => {
+        console.log(contract);
+      })
+      .catch(e=>console.error(e));
   }
   render() {
     return (
@@ -53,7 +44,7 @@ class Create extends React.Component {
         <div className="col col-xs-12 col-md-8" style={{'margin': 'auto'}}>
             <form onSubmit={this.createEvent.bind(this)}>
               <div className='form-group'>
-                <h3 style={styles.h3}>{`Create an Event (Admin Only)`.toUpperCase()}</h3>
+                <h3 style={styles.h3}>{`Create an Event`.toUpperCase()}</h3>
                 <label>Name</label>
                 <input onChange={(event)=>this.setState({event:{...this.state.event, name: event.target.value}})} value={this.state.name} type="text" className="form-control" placeholder="Ex: Etherbrite Testing Event"/>
               </div>
@@ -79,6 +70,7 @@ class Create extends React.Component {
         </div>
       </div>
       </div>
+      {/* <NotificationContainer /> */}
       </div>
     )
   }
@@ -94,10 +86,22 @@ const styles = {
   }
 }
 
-// AMAZINGANDYYYCrowdsale: 0x4089e011d607f49ce84f63c8b488af1b822fbafb
-// -----> VentureCoin(VCN) Address 0x534f0e10ecbafcee0b05311a13d922be931e1281
-// -----> startTime:   1511039437
-// -----> endTime:     1511903437
-// -----> rate:        488
-// -----> wallet:      0xcff8067f05961675277825ab785d5ce830bb485e
-// -----> cappedInWei: 125000000000000000000000
+// const VCNCrowdSaleAddr = this.state.address; // <- need to be change
+  // if (VCNCrowdSaleAddr) {
+  //   eth.coinbase().then((coinbase) => {
+  //     this.setState({
+  //       coinbase
+  //     })
+  //     let num = this.state.etherAmount;
+  //     if (num > 0){
+  //       eth.sendTransaction({
+  //         from: coinbase,
+  //         to: VCNCrowdSaleAddr,
+  //         value: Eth.toWei(num, "ether"),
+  //         data: '0x'
+  //       }).then(tx=>{
+  //         this.setState({ tx })
+  //       }).catch(console.error);
+  //     }
+  //   }).catch(console.error);
+  // }
