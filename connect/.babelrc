@@ -1,1 +1,19 @@
-{ "presets": ["es2015"] }
+{
+  "presets": [
+    "es2017",
+    [
+        "env",
+        {
+            "targets": {
+                "uglify": true
+            }
+        }
+    ]
+  ],
+  "ignore": [
+    "node_modules"
+  ],
+  "plugins": [
+    "transform-object-rest-spread"
+  ]
+}

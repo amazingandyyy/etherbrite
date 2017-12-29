@@ -5,19 +5,50 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createEvent = undefined;
 
-var _config = require('./config');
+var _web = require('web3');
 
-function createEvent(name, location, date, ticketNum, ticketPriceInEther) {
-  var ticketPriceInWei = _config.web3.toWei(ticketPriceInEther, 'ether');
-  return _config.EventContract.new(name, location, date, parseInt(ticketNum), parseInt(ticketPriceInWei), {
-    from: _config.coinbase,
-    gas: _config.DEFAULT_GAS
-  }).then(function (inst) {
-    return inst;
-  }).catch(function (e) {
-    console.error(e);
-    throw e.message;
+var _web2 = _interopRequireDefault(_web);
+
+var _truffleContract = require('truffle-contract');
+
+var _truffleContract2 = _interopRequireDefault(_truffleContract);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var provider = void 0;
+var web3 = void 0;
+var coinbase = void 0;
+var DEFAULT_GAS = 6000000;
+var EventContract = void 0;
+
+function createEvent(p) {
+  if (!p) return console.error('Provider is required for etherbrite-connect.');
+  provider = p;
+  web3 = new _web2.default(provider);
+  coinbase = web3.eth.coinbase;
+  EventContract = (0, _truffleContract2.default)(require('../contracts/Event.json'));
+  EventContract.setProvider(provider);
+  return createEventFnc;
+}
+
+function createEventFnc(name, location, date, ticketNum, ticketPriceInEther) {
+  var ticketPriceInWei = web3.toWei(ticketPriceInEther, 'ether');
+  console.log({
+    name: name, location: location, date: date, ticketNum: ticketNum, ticketPriceInEther: ticketPriceInEther
   });
+  return EventContract.new(name, location, date, parseInt(ticketNum), parseInt(ticketPriceInWei), {
+    from: coinbase,
+    gas: DEFAULT_GAS
+  });
+  // .then(contract => {
+  //   console.log(`deployed event contract address: ${contract.address}`);
+  //   return contract.address;
+  // })
+  // .catch(e => {
+  //   console.error('Error when creating contract:')
+  //   console.error(e);
+  //   throw(e.message);
+  // })
 }
 
 exports.createEvent = createEvent;

@@ -1,20 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Eth from 'ethjs';
-import { createEvent } from '../../../connect/src/index';
+import { createEvent } from 'etherbrite-connect';
 // import 'react-notifications/lib/notifications.css';
 // import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 let initialState = {
   event: {
-    name: '',
-    location: '',
-    date: '',
-    ticketNum: 0,
-    ticketPrice : 0
+    name: 'Testing Event Name',
+    location: 'Testing Event Location',
+    date: new Date().toLocaleDateString([], {
+      day: '2-digit', month: '2-digit', year: 'numeric', 
+    }).split('/').join('-').toString(),
+    ticketNum: 10,
+    ticketPrice : 0.001
   },
   tx: ''
-}
+};
+
 class Create extends React.Component {
   
   constructor(props) {
@@ -26,13 +29,12 @@ class Create extends React.Component {
   }
   createEvent(e) {
     e.preventDefault();
-    const { eth } = this.props;
     const createEventFnc = createEvent(this.props.eth.currentProvider);
-    let { name, location, date, ticketNum, ticketPrice } = this.state;
-
+    let { name, location, date, ticketNum, ticketPrice } = this.state.event;
     createEventFnc(name, location, date, ticketNum, ticketPrice)
       .then(contract => {
-        console.log(contract);
+        console.log('hey');
+        console.log(contract.address);
       })
       .catch(e=>console.error(e));
   }

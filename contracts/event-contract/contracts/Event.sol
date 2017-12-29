@@ -8,7 +8,7 @@ contract Event {
   uint    public ticketNum = 0;
   uint    public ticketPrice;
 
-  event EventContractCreated(uint timestamp, string name, string location, string date, uint ticketNum, uint ticketPrice);
+  event ContractCreated(uint timestamp, string name, string location, string date, uint ticketNum, uint ticketPrice);
   event NewRegistration(uint timestamp, string first, string last, string email, bool checkedin);
   event CheckedIn(uint timestamp, address buyer, bool checkedin);
   
@@ -41,7 +41,7 @@ contract Event {
     ticketNum = _ticketNum;
     ticketPrice = _ticketPrice;
 
-    EventContractCreated(now, name, location, date, ticketNum, ticketPrice);
+    ContractCreated(now, name, location, date, ticketNum, ticketPrice);
 
   }
 
