@@ -22,20 +22,21 @@ var DEFAULT_GAS = 6000000;
 var EventContract = void 0;
 
 function createEvent(p) {
-  if (!p) return console.error('Provider is required for etherbrite-connect.');
+  if (!p) return console.error('\x1b[31m', 'Provider is required for etherbrite-connect.', '\x1b[0m');
   provider = p;
   web3 = new _web2.default(provider);
   coinbase = web3.eth.coinbase;
   EventContract = (0, _truffleContract2.default)(require('../contracts/Event.json'));
   EventContract.setProvider(provider);
+  console.log('\x1B[32m', 'Deploying contract...', '\x1b[0m');
   return createEventFnc;
 }
 
 function createEventFnc(name, location, date, ticketNum, ticketPriceInEther) {
   var ticketPriceInWei = web3.toWei(ticketPriceInEther, 'ether');
-  console.log({
-    name: name, location: location, date: date, ticketNum: ticketNum, ticketPriceInEther: ticketPriceInEther
-  });
+  // console.log({
+  //   name, location, date, ticketNum, ticketPriceInEther
+  // });
   return EventContract.new(name, location, date, parseInt(ticketNum), parseInt(ticketPriceInWei), {
     from: coinbase,
     gas: DEFAULT_GAS

@@ -4,7 +4,7 @@ import Web3 from 'web3';
 // test it here
 test();
 
-function test() {
+async function test() {
   const provider = new Web3.providers.HttpProvider("http://localhost:8545");
   
   let { name, location, date, ticketNum, ticketPrice } = {
@@ -16,17 +16,13 @@ function test() {
     ticketNum: 10,
     ticketPrice : 0.001
   };
-  createEvent(provider)(name, location, date, ticketNum, ticketPrice)
-  .then(async contract => {
-    console.log('\x1b[32m','Conctract deployed as', contract.address);
-    try{
-      let res = await eventListener(provider)(contract.address, 'ContractCreated')
-      console.log(res);
-    }catch(e){
-      console.error('\x1b[31m', 'Error', e);
-    }
-  })
-  .catch(e=>console.error(e));
+  try{
+    let contract = await createEvent(provider)(name, location, date, ticketNum, ticketPrice);
+    let ContractCreatedEvent = await eventListener(provider)(contract.address, 'ContractCreated');
+    if(ContractCreatedEvent) return console.log("Event Contract created"); // update UI
+  }catch(e){
+    console.error('\x1b[31m', 'Error', e);
+  }
 }
 
 // https://coursetro.com/posts/code/100/Solidity-Events-Tutorial---Using-Web3.js-to-Listen-for-Smart-Contract-Events

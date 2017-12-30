@@ -16,14 +16,14 @@ Object.keys(_createEvent).forEach(function (key) {
   });
 });
 
-var _listener = require('./listener');
+var _eventListener = require('./eventListener');
 
-Object.keys(_listener).forEach(function (key) {
+Object.keys(_eventListener).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _listener[key];
+      return _eventListener[key];
     }
   });
 });
