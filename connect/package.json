@@ -4,7 +4,7 @@
   "description": "Connect ethereum network.",
   "main": "lib/index.js",
   "scripts": {
-    "test": "babel-node test.js",
+    "test": "jest",
     "build": "babel src --out-dir lib",
     "build:watch": "babel src --out-dir lib --watch",
     "release": "npm version patch && babel src --out-dir lib && npm publish"
@@ -17,7 +17,8 @@
     "babel-core": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-es2017": "^6.24.1"
+    "babel-preset-es2017": "^6.24.1",
+    "jest": "^22.0.4"
   },
   "dependencies": {
     "truffle-contract": "^3.0.1",

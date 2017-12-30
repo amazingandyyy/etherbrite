@@ -8,9 +8,9 @@ contract Event {
   uint    public ticketNum = 0;
   uint    public ticketPrice;
 
-  event ContractCreated(uint timestamp, string name, string location, string date, uint ticketNum, uint ticketPrice);
-  event NewRegistration(uint timestamp, string first, string last, string email, bool checkedin);
-  event CheckedIn(uint timestamp, address buyer, bool checkedin);
+  event ContractCreated();
+  event NewRegistration(string first, string last, string email, bool checkedin);
+  event CheckedIn(address buyer, bool checkedin);
   
   struct Attendee {
     string    first;
@@ -41,8 +41,7 @@ contract Event {
     ticketNum = _ticketNum;
     ticketPrice = _ticketPrice;
 
-    ContractCreated(now, name, location, date, ticketNum, ticketPrice);
-
+    ContractCreated();
   }
 
   function register(string _first, string _last, string _email) public payable {
@@ -62,7 +61,7 @@ contract Event {
     ticketNum = ticketNum - 1;
     Attendees[msg.sender] = currentAttendee;
 
-    NewRegistration(now, Attendees[msg.sender].first, Attendees[msg.sender].last, Attendees[msg.sender].email, Attendees[msg.sender].checkedin);
+    NewRegistration(Attendees[msg.sender].first, Attendees[msg.sender].last, Attendees[msg.sender].email, Attendees[msg.sender].checkedin);
   }
 
   // search with address
@@ -85,7 +84,7 @@ contract Event {
     Attendees[_buyer].checkedin = true;
     return (Attendees[_buyer].first, Attendees[_buyer].last, Attendees[_buyer].email, Attendees[_buyer].checkedin);
 
-    CheckedIn(now, _buyer, Attendees[_buyer].checkedin);
+    CheckedIn(_buyer, Attendees[_buyer].checkedin);
   }
   
 }

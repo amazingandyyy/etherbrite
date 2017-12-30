@@ -1,67 +1,33 @@
-import { createEvent } from './src';
+import { createEvent, eventListener } from './src';
 import Web3 from 'web3';
-const provider = new Web3.providers.HttpProvider("http://localhost:8545");
-const web3 = new Web3(provider);
 
-let eventObj = {
-  name: 'Testing Event Name',
-  location: 'Testing Event Location',
-  date: new Date().toLocaleDateString([], {
-    day: '2-digit', month: '2-digit', year: 'numeric', 
-  }).split('/').join('-').toString(),
-  ticketNum: 10,
-  ticketPrice : 0.001
-};
-let { name, location, date, ticketNum, ticketPrice } = eventObj;
+// test it here
+test();
 
 function test() {
+  const provider = new Web3.providers.HttpProvider("http://localhost:8545");
+  
+  let { name, location, date, ticketNum, ticketPrice } = {
+    name: 'Testing Event Name',
+    location: 'Testing Event Location',
+    date: new Date().toLocaleDateString([], {
+      day: '2-digit', month: '2-digit', year: 'numeric', 
+    }).split('/').join('-').toString(),
+    ticketNum: 10,
+    ticketPrice : 0.001
+  };
   createEvent(provider)(name, location, date, ticketNum, ticketPrice)
-  .then(contract => {
-    console.log(contract.address);
-    listenToEvent(contract.address, 'ContractCreated');
+  .then(async contract => {
+    console.log('\x1b[32m','Conctract deployed as', contract.address);
+    try{
+      let res = await eventListener(provider)(contract.address, 'ContractCreated')
+      console.log(res);
+    }catch(e){
+      console.error('\x1b[31m', 'Error', e);
+    }
   })
   .catch(e=>console.error(e));
 }
-
-function listenToEvent(contractAddr, evt) {
-  const filter = web3.eth.filter({
-    fromBlock: web3.eth.getBlock('latest') - 50,
-    toBlock: 'latest',
-    address: contractAddr,
-    topics: [generateTopic(evt)]
-  })
-
-  filter.get(function (err, response) {
-    // callback code here
-    if(err) return console.error(err);
-    console.log(response[0]);
-  })
-}
-
-function generateTopic(evt){
-  let topic = '';
-  let result = '';
-  switch (evt.toString()) {
-    case 'ContractCreated':
-      topic = `ContractCreated(uint, string, string, string, uint, uint)`;
-      result = "0x6693ea92f7d90a1a5305cf52eb8b9a45186eec40b0e9909e64c070805601aaeb";
-      break;
-    case 'NewRegistration':
-      topic = `NewRegistration(uint, string, string, string, bool)`;
-      break;
-    case 'CheckedIn':
-      topic = `CheckedIn(uint, address, bool)`;
-      break;
-    default:
-      return console.error('Topic cannot be undefined');
-      break;
-  }
-  // const result = web3.sha3(topic);
-  // console.log(result);
-  return result;
-}
-
-test();
 
 // https://coursetro.com/posts/code/100/Solidity-Events-Tutorial---Using-Web3.js-to-Listen-for-Smart-Contract-Events
 // var contract = web3.eth.contract(YOUR ABI);
