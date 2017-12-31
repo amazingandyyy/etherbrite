@@ -9,46 +9,53 @@ var _web = require('web3');
 
 var _web2 = _interopRequireDefault(_web);
 
-var _truffleContract = require('truffle-contract');
-
-var _truffleContract2 = _interopRequireDefault(_truffleContract);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var provider = void 0;
 var web3 = void 0;
-var coinbase = void 0;
 var DEFAULT_GAS = 6000000;
-var EventContract = void 0;
 
 function createEvent(p) {
   if (!p) return console.error('\x1b[31m', 'Provider is required for etherbrite-connect.', '\x1b[0m');
   provider = p;
   web3 = new _web2.default(provider);
-  coinbase = web3.eth.coinbase;
-  EventContract = (0, _truffleContract2.default)(require('../contracts/Event.json'));
-  EventContract.setProvider(provider);
-  console.log('\x1B[32m', 'Deploying contract...', '\x1b[0m');
+  console.log('Deploying contract...');
   return createEventFnc;
 }
 
 function createEventFnc(name, location, date, ticketNum, ticketPriceInEther) {
-  var ticketPriceInWei = web3.toWei(ticketPriceInEther, 'ether');
-  // console.log({
-  //   name, location, date, ticketNum, ticketPriceInEther
-  // });
-  return EventContract.new(name, location, date, parseInt(ticketNum), parseInt(ticketPriceInWei), {
-    from: coinbase,
-    gas: DEFAULT_GAS
+  var _require = require('../contracts/Event.json'),
+      abi = _require.abi,
+      bytecode = _require.bytecode;
+
+  var ticketPriceInWei = web3.utils.toWei(ticketPriceInEther.toString(), 'ether');
+  var eventContract = new web3.eth.Contract(abi);
+  return new Promise(function (resolve, reject) {
+    web3.eth.getCoinbase(function (error, coinbase) {
+      if (error) return console.error('Coinbase not found');
+      eventContract.deploy({
+        data: bytecode,
+        arguments: [name, location, date, ticketNum, ticketPriceInWei]
+      }).send({
+        from: coinbase,
+        gas: DEFAULT_GAS
+      }).then(function (ins) {
+        return resolve(ins);
+      }).catch(function (e) {
+        return reject(e);
+      });
+    });
   });
-  // .then(contract => {
-  //   console.log(`deployed event contract address: ${contract.address}`);
-  //   return contract.address;
+
+  // Usage
+  // .then(inst=>{
+  //   if(inst.options.address){
+  //     console.log('hell yea');
+  //   }
+  //   console.log(inst);
   // })
-  // .catch(e => {
-  //   console.error('Error when creating contract:')
+  // .catch(e=>{
   //   console.error(e);
-  //   throw(e.message);
   // })
 }
 

@@ -1,48 +1,47 @@
 import Web3 from 'web3';
-import TruffleContract from 'truffle-contract';
 
 let provider;
 let web3;
-let coinbase;
 const DEFAULT_GAS = 6000000;
-let EventContract;
 
 function createEvent(p) {
-  if(!p) return console.error('\x1b[31m','Provider is required for etherbrite-connect.', '\x1b[0m');
+  if (!p) return console.error('\x1b[31m', 'Provider is required for etherbrite-connect.', '\x1b[0m');
   provider = p;
   web3 = new Web3(provider);
-  coinbase = web3.eth.coinbase;
-  EventContract = TruffleContract(require('../contracts/Event.json'));
-  EventContract.setProvider(provider);
-  console.log(`\x1b[32m`, `Deploying contract...`, '\x1b[0m');
+  console.log(`Deploying contract...`);
   return createEventFnc;
 }
 
 function createEventFnc(name, location, date, ticketNum, ticketPriceInEther) {
-  let ticketPriceInWei = web3.toWei(ticketPriceInEther, 'ether');
-  // console.log({
-  //   name, location, date, ticketNum, ticketPriceInEther
-  // });
-  return EventContract.new(
-    name,
-    location,
-    date,
-    parseInt(ticketNum),
-    parseInt(ticketPriceInWei),
-    {
-      from: coinbase,
-      gas: DEFAULT_GAS
-    }
-  );
-  // .then(contract => {
-  //   console.log(`deployed event contract address: ${contract.address}`);
-  //   return contract.address;
+  let { abi, bytecode } = require('../contracts/Event.json');
+  let ticketPriceInWei = web3.utils.toWei(ticketPriceInEther.toString(), 'ether');
+  let eventContract = new web3.eth.Contract(abi);
+  return new Promise((resolve, reject) => {
+    web3.eth.getCoinbase((error, coinbase) => {
+      if (error) return console.error('Coinbase not found');
+      eventContract.deploy({
+          data: bytecode,
+          arguments: [name, location, date, ticketNum, ticketPriceInWei]
+        }).send({
+          from: coinbase,
+          gas: DEFAULT_GAS
+        }).then(ins => resolve(ins))
+        .catch(e => reject(e));
+    })
+  })
+
+  // Usage
+  // .then(inst=>{
+  //   if(inst.options.address){
+  //     console.log('hell yea');
+  //   }
+  //   console.log(inst);
   // })
-  // .catch(e => {
-  //   console.error('Error when creating contract:')
+  // .catch(e=>{
   //   console.error(e);
-  //   throw(e.message);
   // })
 }
 
-export { createEvent };
+export {
+  createEvent
+};

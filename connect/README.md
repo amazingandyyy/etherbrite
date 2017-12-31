@@ -20,6 +20,7 @@ const provider = new Web3.providers.HttpProvider("http://localhost:8545");
 let deplyedContract = await createEvent(provider)(name, location, date, ticketNum, ticketPrice);
 let contractAddr = deplyedContract.address;
 let ContractCreatedEvent = await eventListener(provider)(contractAddr, 'ContractCreated');
+if(ContractCreatedEvent) return console.log("Event is created and the contract is deployed.);
 ```
 
 ## Sample Code

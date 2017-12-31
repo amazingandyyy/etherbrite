@@ -15,6 +15,7 @@
         "node_modules"
     ],
     "plugins": [
+        "transform-runtime",
         "transform-object-rest-spread"
     ]
 }

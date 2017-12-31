@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
 import root from './root'
-import eth from './eth'
+import web3 from './web3'
 
 export default combineReducers({
   root,
-  eth
+  web3
 })

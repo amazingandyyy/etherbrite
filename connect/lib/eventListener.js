@@ -31,11 +31,11 @@ function eventListenerFnc(contractAddr, evt) {
   });
   console.log('\x1B[0m\x1B[2m', 'Listening to', evt + ' event', 'at address', '' + contractAddr, '\x1b[0m');
 
-  return new Promise(function (res, rej) {
+  return new Promise(function (resolve, reject) {
     filter.get(function (err, response) {
-      if (err) return rej(err);
+      if (err) return reject(err);
       if (response.length > 0) {
-        return res({ event: evt, response: response[0] });
+        return resolve({ event: evt, response: response[0] });
       }
     });
   });
@@ -55,7 +55,6 @@ function generateTopic(evt) {
       break;
     default:
       return console.error('Topic cannot be undefined');
-      break;
   }
   return web3.sha3(topic);
 }

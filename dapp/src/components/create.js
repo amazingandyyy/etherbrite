@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Eth from 'ethjs';
 import { createEvent } from 'etherbrite-connect';
+
 // import 'react-notifications/lib/notifications.css';
 // import {NotificationContainer, NotificationManager} from 'react-notifications';
 
@@ -25,18 +25,24 @@ class Create extends React.Component {
     this.state = initialState;
   }
   componentDidMount(){
+    // test(this.props.web3.eth.currentProvider);
     // NotificationManager.info('Info message');
   }
-  createEvent(e) {
+  createEventNow(e) {
     e.preventDefault();
-    const createEventFnc = createEvent(this.props.eth.currentProvider);
+    const provider = this.props.web3.eth.currentProvider;
     let { name, location, date, ticketNum, ticketPrice } = this.state.event;
-    createEventFnc(name, location, date, ticketNum, ticketPrice)
-      .then(contract => {
-        console.log('hey');
-        console.log(contract.address);
+
+    createEvent(provider)(name, location, date, ticketNum, ticketPrice)
+      .then(inst=>{
+        if(inst.options.address){
+          console.log('hell yea');
+        }
+        console.log(inst);
       })
-      .catch(e=>console.error(e));
+      .catch(e=>{
+        console.error(e);
+      })
   }
   render() {
     return (
@@ -44,7 +50,7 @@ class Create extends React.Component {
       <div className="container" style={{'marginTop': '50px', 'marginBottom': '50px'}}>
       <div className="row">
         <div className="col col-xs-12 col-md-8" style={{'margin': 'auto'}}>
-            <form onSubmit={this.createEvent.bind(this)}>
+            <form onSubmit={this.createEventNow.bind(this)}>
               <div className='form-group'>
                 <h3 style={styles.h3}>{`Create an Event`.toUpperCase()}</h3>
                 <label>Name</label>
@@ -79,7 +85,10 @@ class Create extends React.Component {
 }
 
 
-export default connect(({ eth }) => ({ eth }), null)(Create)
+export default connect(({ web3 }) => {
+  console.log(web3);
+  return { web3 }
+}, null)(Create)
 
 const styles = {
   'h3': {
