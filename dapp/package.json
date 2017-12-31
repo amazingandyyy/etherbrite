@@ -7,7 +7,7 @@
     "test": "eslint --fix src/",
     "start": "npm run prod && serve ./dist",
     "dev": "webpack-dev-server --open --config webpack.dev.js",
-    "prod": "rm -rf ../docs && webpack --progress -p --config webpack.prod.js",
+    "build": "rm -rf ../docs && webpack --progress -p --config webpack.prod.js",
     "precommit": "npm test",
     "prepush": "npm test"
   },
@@ -42,8 +42,6 @@
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.7",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-react": "^7.5.1",
     "extract-text-webpack-plugin": "^3.0.0",
     "html-webpack-plugin": "^2.30.1",
     "husky": "^0.14.3",

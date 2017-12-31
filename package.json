@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "eslint --fix ."
   },
   "repository": {
     "type": "git",
@@ -21,11 +21,15 @@
   "homepage": "https://github.com/amazingandyyy/etherbrite#readme",
   "dependencies": {
     "eslint": "^4.14.0",
+    "eslint-config-logux": "^17.0.0",
     "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-es5": "^1.1.0",
     "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.5.0",
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-react": "^7.5.1",
+    "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-standard": "^3.0.1"
   }
 }
