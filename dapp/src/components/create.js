@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createEvent } from 'etherbrite-connect';
+import { eventContract } from 'etherbrite-connect';
 
 // import 'react-notifications/lib/notifications.css';
 // import {NotificationContainer, NotificationManager} from 'react-notifications';
@@ -32,17 +32,13 @@ class Create extends React.Component {
     e.preventDefault();
     const provider = this.props.web3.eth.currentProvider;
     let { name, location, date, ticketNum, ticketPrice } = this.state.event;
+    const eventContractInst = new eventContract(provider);
 
-    createEvent(provider)(name, location, date, ticketNum, ticketPrice)
+    eventContractInst.createEvent(name, location, date, ticketNum, ticketPrice)
       .then(inst=>{
-        if(inst.options.address){
-          console.log('hell yea');
-        }
-        console.log(inst);
+        if(inst.options.address) return console.log(`Deplyed Contract Address ${inst.options.address}`, inst);
       })
-      .catch(e=>{
-        console.error(e);
-      })
+      .catch(e=> console.error(e));
   }
   render() {
     return (

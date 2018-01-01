@@ -1,2 +1,2 @@
-export * from './createEvent';
+export * from './eventContract';
 export * from './eventListener';

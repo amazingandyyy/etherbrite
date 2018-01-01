@@ -4,14 +4,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createEvent = require('./createEvent');
+var _eventContract = require('./eventContract');
 
-Object.keys(_createEvent).forEach(function (key) {
+Object.keys(_eventContract).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _createEvent[key];
+      return _eventContract[key];
     }
   });
 });
