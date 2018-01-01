@@ -3,7 +3,8 @@
         "browser": true,
         "commonjs": true,
         "es6": true,
-        "node": true
+        "node": true,
+        "jest/globals": true
     },
     "parserOptions": {
         "sourceType": "module"
@@ -22,6 +23,7 @@
     },
     "plugins": [
         "react",
-        "node"
+        "node",
+        "jest"
     ]
 }

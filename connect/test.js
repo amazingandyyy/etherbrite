@@ -11,12 +11,33 @@ let { name, location, date, ticketNum, ticketPrice } = {
   ticketNum: 10,
   ticketPrice : 0.001
 };
-
-// Class usage
 const eventContractInst = new eventContract(provider);
-eventContractInst.createEvent(name, location, date, ticketNum, ticketPrice).then(inst=>{
-  if(inst.options.address) return console.log(`Deplyed Contract Address ${inst.options.address}`);
+
+// Test Create contract Class
+test('can create an Event Contract', done => {
+  eventContractInst.createEvent(name, location, date, ticketNum, ticketPrice).then(inst=>{
+    const { address } = inst.options;
+    if(address) {
+      expect(address).toBe(address);
+      done();
+    } else return console.error('Deployment failed, no contract address return.')
+  })
+  .catch(e=>{
+    console.error(e)
+  })
 })
-.catch(e=>{
-  console.error(e)
+
+test('can register a new participant by paying enough', done => {
+  eventContractInst.createEvent(name, location, date, ticketNum, ticketPrice).then(inst=>{
+    const { address } = inst.options;
+    if(address) {
+      const personObj = { first: 'Andy', last: 'Chen', email: 'amazingandyyy@gmail.com' };
+      eventContractInst.register(address, personObj)
+        .then(r => {
+          expect(Object.keys(r.events)[0]).toBe("NewRegistration");
+          done();
+        })
+        .catch(e => console.error(e))
+      } else return console.error('Deployment failed, no contract address return.');
+  }).catch(e => console.error(e))
 })

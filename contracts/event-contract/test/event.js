@@ -1,5 +1,4 @@
 const EventContract = artifacts.require("./Event.sol");
-const Web3 = require('web3');
 
 contract('Event contract', function(accounts) {
   let holder;

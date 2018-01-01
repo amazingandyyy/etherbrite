@@ -15,7 +15,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var DEFAULT_GAS = 6000000;
+var DEFAULT_GAS = 4700000;
 
 var eventContract = function () {
   function eventContract(p) {
@@ -34,6 +34,8 @@ var eventContract = function () {
       var _require = require('../contracts/Event.json'),
           abi = _require.abi,
           bytecode = _require.bytecode;
+      // bytecode is only for deploying
+
 
       var ticketPriceInWei = web3.utils.toWei(ticketPriceInEther.toString(), 'ether');
       var eventContract = new web3.eth.Contract(abi);
@@ -50,6 +52,37 @@ var eventContract = function () {
             return resolve(ins);
           }).catch(function (e) {
             return reject(e);
+          });
+        });
+      });
+    }
+  }, {
+    key: 'register',
+    value: function register(address, _ref) {
+      var first = _ref.first,
+          last = _ref.last,
+          email = _ref.email;
+
+      console.log('Registering new participant...');
+      var web3 = this.web3;
+
+      var _require2 = require('../contracts/Event.json'),
+          abi = _require2.abi;
+
+      var eventContract = new web3.eth.Contract(abi, address);
+      var ticketPriceInWei = void 0;
+
+      return new Promise(function (resolve, reject) {
+        web3.eth.getCoinbase(function (error, coinbase) {
+          if (error) return console.error('Coinbase not found');
+          eventContract.methods.ticketPrice().call(function (err, priceInWei) {
+            if (err) return console.error(err);
+            ticketPriceInWei = priceInWei;
+            eventContract.methods.register(first, last, email).send({
+              from: coinbase,
+              gas: DEFAULT_GAS,
+              value: ticketPriceInWei // in wei
+            }).then(resolve).catch(reject);
           });
         });
       });
