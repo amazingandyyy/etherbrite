@@ -4,8 +4,7 @@
   "description": "Connect ethereum network.",
   "main": "lib/index.js",
   "scripts": {
-    "test": "babel-node test.js",
-    "jest": "jest",
+    "test": "jest",
     "build": "babel src --out-dir lib",
     "build:watch": "babel src --out-dir lib --watch",
     "release": "npm version patch && babel src --out-dir lib && npm publish"

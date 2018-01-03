@@ -6,7 +6,7 @@ contract('Event contract', function(accounts) {
   let stranger;
   let eventInstance;
 
-  beforeEach('init', async function() {
+  beforeAll('init', async function() {
     holder = accounts[0];
     buyer = accounts[1];
     stranger = accounts[2];
@@ -36,6 +36,7 @@ contract('Event contract', function(accounts) {
     assert.isTrue(publid_find_result[2] == 'Private');
     assert.isTrue(publid_find_result[3] == false);
   });
+  
   it('register one participant and search for it privately', async function() {
     let reg_result = await eventInstance.register(
       'Andy', 'Chen', 'amazingandyyy@gmail.com',

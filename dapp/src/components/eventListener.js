@@ -38,7 +38,7 @@ function generateTopic(evt){
       topic = `${evt}()`;
       break;
     case 'NewRegistration':
-      topic = `${evt}(string,string,string,bool)`;
+      topic = `${evt}(address,string,string,string,bool)`;
       break;
     case 'CheckedIn':
       topic = `${evt}(address,bool)`;

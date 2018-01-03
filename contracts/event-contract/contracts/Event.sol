@@ -9,7 +9,7 @@ contract Event {
   uint    public ticketPrice;
 
   event ContractCreated();
-  event NewRegistration(string first, string last, string email, bool checkedin);
+  event NewRegistration(address buyer, string first, string last, string email, bool checkedin);
   event CheckedIn(address buyer, bool checkedin);
   
   struct Attendee {
@@ -61,11 +61,11 @@ contract Event {
     ticketNum = ticketNum - 1;
     Attendees[msg.sender] = currentAttendee;
 
-    NewRegistration(Attendees[msg.sender].first, Attendees[msg.sender].last, Attendees[msg.sender].email, Attendees[msg.sender].checkedin);
+    NewRegistration(msg.sender, Attendees[msg.sender].first, Attendees[msg.sender].last, Attendees[msg.sender].email, Attendees[msg.sender].checkedin);
   }
 
   // search with address
-  function search(address _buyer) 
+  function search(address _buyer)
     public 
     returns (string, string, string, bool)
   {
@@ -82,9 +82,8 @@ contract Event {
   function checkin(address _buyer) isHolder public returns (string, string, string, bool) {
     require(bytes(Attendees[_buyer].email).length > 0);
     Attendees[_buyer].checkedin = true;
-    return (Attendees[_buyer].first, Attendees[_buyer].last, Attendees[_buyer].email, Attendees[_buyer].checkedin);
-
     CheckedIn(_buyer, Attendees[_buyer].checkedin);
+    return (Attendees[_buyer].first, Attendees[_buyer].last, Attendees[_buyer].email, Attendees[_buyer].checkedin);
   }
   
 }
