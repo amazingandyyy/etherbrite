@@ -18,7 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "etherbrite-connect": "^1.0.2",
+    "etherbrite-connect": "^1.0.4",
     "ethjs": "^0.3.0",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
