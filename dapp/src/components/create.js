@@ -27,6 +27,7 @@ class Create extends React.Component {
   componentDidMount(){
     // test(this.props.web3.eth.currentProvider);
     // NotificationManager.info('Info message');
+    this.setState({event: initialState.event});
   }
   createEventNow(e) {
     e.preventDefault();
@@ -36,19 +37,29 @@ class Create extends React.Component {
 
     eventContractInst.createEvent(name, location, date, ticketNum, ticketPrice)
       .then(inst=>{
-        if(inst.options.address) return console.log(`Deplyed Contract Address ${inst.options.address}`, inst);
+        this.contractWillCreate();
+        if(inst.options.address) {
+          this.contractDidCreated();
+          return console.log(`Deplyed Contract Address ${inst.options.address}`, inst);
+        }
       })
       .catch(e=> console.error(e));
+  }
+  contractWillCreate(){
+
+  }
+  contractDidCreated(){
+
   }
   render() {
     return (
       <div>
-      <div className="container" style={{'marginTop': '50px', 'marginBottom': '50px'}}>
+      <div className="container" style={{'marginTop': '30px', 'marginBottom': '50px'}}>
       <div className="row">
         <div className="col col-xs-12 col-md-8" style={{'margin': 'auto'}}>
             <form onSubmit={this.createEventNow.bind(this)}>
               <div className='form-group'>
-                <h3 style={styles.h3}>{`Create an Event`.toUpperCase()}</h3>
+                <h2 style={styles.h2}>Create Event</h2>
                 <label>Name</label>
                 <input onChange={(event)=>this.setState({event:{...this.state.event, name: event.target.value}})} value={this.state.name} type="text" className="form-control" placeholder="Ex: Etherbrite Testing Event"/>
               </div>
@@ -69,7 +80,10 @@ class Create extends React.Component {
                 <input onChange={(event)=>this.setState({event:{...this.state.event, ticketPrice: event.target.value}})} value={this.state.ticketPrice} step="0.001" type="number" className="form-control" placeholder="Price in ether, Ex: 0.01 ethers"/>
                 {this.state.event.ticketPrice?<small>around ${Math.round(this.state.event.ticketPrice * 755.55 * 100)/100} USD</small>:''}
               </div>
-              <button type="submit"  className="btn btn-primary">Preview and Create</button>
+              {/* <div className='float-right clearfix'> */}
+                <button type="submit"  className="btn-block btn btn-primary">Preview and Create</button>
+                <button type="submit"  className="btn-block btn btn-secondary">Cancel</button>
+              {/* </div> */}
             </form>
         </div>
       </div>
@@ -87,28 +101,8 @@ export default connect(({ web3 }) => {
 }, null)(Create)
 
 const styles = {
-  'h3': {
-    'fontSize': 20,
-    'letterSpacing': '1px'
+  'h2': {
+    'color': 'black',
+    'marginBottom': '20px'
   }
 }
-
-// const VCNCrowdSaleAddr = this.state.address; // <- need to be change
-  // if (VCNCrowdSaleAddr) {
-  //   eth.coinbase().then((coinbase) => {
-  //     this.setState({
-  //       coinbase
-  //     })
-  //     let num = this.state.etherAmount;
-  //     if (num > 0){
-  //       eth.sendTransaction({
-  //         from: coinbase,
-  //         to: VCNCrowdSaleAddr,
-  //         value: Eth.toWei(num, "ether"),
-  //         data: '0x'
-  //       }).then(tx=>{
-  //         this.setState({ tx })
-  //       }).catch(console.error);
-  //     }
-  //   }).catch(console.error);
-  // }
