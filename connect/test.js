@@ -52,11 +52,11 @@ test('can search for a existing participant', done => {
           let { buyer } = r.events.NewRegistration.returnValues;
 
           eventContractInst.search(address, { address: buyer })
-            .then(result => {
-              expect(result[0]).toBe(personObj.first);
-              expect(result[1]).toBe(personObj.last);
-              expect(result[2]).toBe(personObj.email);
-              expect(result[3]).toBe(false);
+            .then(r => {
+              expect(r[0]).toBe(personObj.first);
+              expect(r[1]).toBe(personObj.last);
+              expect(r[2]).toBe(personObj.email);
+              expect(r[3]).toBe(false);
               done();
             }).catch(console.error);
         }).catch(console.error)
@@ -74,6 +74,7 @@ test('can checkin a existing participant', done => {
           let { buyer } = r.events.NewRegistration.returnValues;
           eventContractInst.checkin(address, { address: buyer })
             .then(r => {
+              console.log(r)
               eventContractInst.search(address, { address: buyer })
               .then(result => {
                 expect(result[0]).toBe(personObj.first);
