@@ -17,5 +17,8 @@ npm i
 npm run start
 ```
 
+### You need [metamaks](https://metamask.io/) in your chrome
+
+
 ## LICENSE
 MIT
