@@ -17,7 +17,7 @@ npm run start
 ## You need [metamaks](https://metamask.io/) in your chrome
 
 ## Screenshot
-[!image1](https://i.imgur.com/Cciyb4U.png)
+![image1](https://i.imgur.com/Cciyb4U.png)
 
 ### Author 
 Andy Chen([amazingandyyy](https://github.com/amazingandyyy))
