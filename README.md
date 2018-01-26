@@ -4,7 +4,7 @@ An eventbrite-like project on ethereum blockchain. A full-stack Dapp built with 
 ### author 
 Andy Chen([amazingandyyy](https://github.com/amazingandyyy))
 
-### You need testrpc in seperate commandline session
+### You need [testrpc](https://github.com/trufflesuite/ganache-cli) in seperate commandline session
 ```
 npm install -g ganache-cli
 ganache-cli
