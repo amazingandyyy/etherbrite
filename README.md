@@ -1,10 +1,7 @@
 # etherbrite-project
 An eventbrite-like project on ethereum blockchain. A full-stack Dapp built with Solidity and Web3js.
 
-### author 
-Andy Chen([amazingandyyy](https://github.com/amazingandyyy))
-
-### You need [testrpc](https://github.com/trufflesuite/ganache-cli) in seperate commandline session
+### You need [testrpc](https://github.com/trufflesuite/ganache-cli) in a seperated terminal session
 ```
 npm install -g ganache-cli
 ganache-cli
@@ -19,6 +16,8 @@ npm run start
 
 ### You need [metamaks](https://metamask.io/) in your chrome
 
+### author 
+Andy Chen([amazingandyyy](https://github.com/amazingandyyy))
 
 ## LICENSE
-MIT
+[MIT](https://github.com/amazingandyyy/etherbrite/blob/master/LICENSE)
