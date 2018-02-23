@@ -1,5 +1,5 @@
 # etherbrite-project
-An eventbrite-like project on ethereum blockchain. A full-stack Dapp built with Solidity and Web3js.
+An eventbrite-like project(basically a CRUD DApp) on ethereum blockchain. A fullstack DApp built with Solidity, TruffleJS, Web3js and React/Redux.
 
 ## You need [testrpc](https://github.com/trufflesuite/ganache-cli) in a seperated terminal session
 ```
