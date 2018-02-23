@@ -1,6 +1,11 @@
 # etherbrite-project
 An eventbrite-like project(basically a CRUD DApp) on ethereum blockchain. A fullstack DApp built with Solidity, TruffleJS, Web3js and React/Redux.
 
+## This is lovely demo for 
+- Build contract in Solidity
+- Test all smart contract functions with [Mocha](https://github.com/amazingandyyy/etherbrite/blob/master/contracts/event-contract/test/event.js)
+- Use Web3 in React/[Redux](https://github.com/amazingandyyy/etherbrite/blob/master/dapp/src/actions/index.js)
+
 ## You need [testrpc](https://github.com/trufflesuite/ganache-cli) in a seperated terminal session
 ```
 npm install -g ganache-cli
