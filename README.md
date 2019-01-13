@@ -1,4 +1,4 @@
-# etherbrite-project
+# 📅 etherbrite-project
 An eventbrite-like project(basically a CRUD DApp) on ethereum blockchain. A fullstack DApp built with Solidity, TruffleJS, Web3js and React/Redux.
 
 ## This is lovely demo for 
